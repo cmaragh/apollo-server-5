@@ -1,3 +1,5 @@
+const randomString = require("randomstring");
+
 const resolvers = {
   Query: {
     async allLinks(root, args, { models }) {
@@ -9,7 +11,7 @@ const resolvers = {
     async createLink(root, { url, slug }, { models }) {
       return models.Link.create({
         url,
-        slug
+        slug: (await slug) === "" ? randomString.generate(4) : slug
       });
     }
   }
